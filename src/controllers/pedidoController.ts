@@ -23,9 +23,9 @@ class PedidoController{
         const tota=req.params.tota;
         const id_cabepedi= await pool.query('CALL sp_INS_cabpedido(?,?,?,?)',[id_esta,dni,mont_pago,tota]);      
         console.log(id_cabepedi[0]);
-        return res.json(id_cabepedi[0])
-        
+        return res.json(id_cabepedi[0])        
     }
+    
     //Agrega detalle
     public async agregadetalle (req: Request, res: Response){        
         await pool.query('INSERT INTO tbl_detpedido set ?',[req.body]);

@@ -9,7 +9,8 @@ public router: Router = Router();
         this.config();
     }
     config():void {
-        this.router.post('/cargo', culqiController.Gencargo);          
+        this.router.post('/cargo', culqiController.Gencargo);  
+        this.router.post('/dni',culqiController.getdni)        
     }
 
 }

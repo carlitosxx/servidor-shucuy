@@ -22,17 +22,34 @@ class AuthController{
 
     // Registrar colaborador
     public async signup (req: Request, res: Response){
-        var user: Iuser = {
-            dni: req.body.dni ,
-            user_name: req.body.user_name,
-            email:req.body.email,
-            pass:bcrypt.hashSync(req.body.pass,8),
-            rol:req.body.rol
-           };        
-        const saveUser =await pool.query('INSERT INTO tbl_colaboradores set ?',[user]);
-        //token
-        const token: string =jwt.sign({_id: req.body.dni},'tokentest')
-        res.header('auth-token',token).json(saveUser);   
+        try {
+            var user: Iuser = {
+                dni: req.body.dni ,
+                celu: req.body.celu,
+                email:req.body.email,
+                pass:bcrypt.hashSync(req.body.pass,8),
+                rol:req.body.rol,
+                lati: req.body.lati,
+                longi: req.body.longi,
+                nomb: req.body.nomb,
+                appa: req.body.appa,
+                apma: req.body.apma,
+                estado: req.body.estado,
+                conf: req.body.conf,
+                envi: req.body.envi,
+                codi: req.body.codi,
+                dire: req.body.dire
+               };        
+            const saveUser =await pool.query('INSERT INTO tbl_colaboradores set ?',[user]);
+            //token
+            const token: string =jwt.sign({_id: req.body.dni},'tokentest')
+            res.header('auth-token',token).json(saveUser); 
+        } catch (error) { 
+            if (error.code==='ER_DUP_ENTRY'){
+                res.status(404).json({error:'dato duplicado'});
+            }            
+        }
+          
     }
     // Logear
     public async signin (req: Request, res: Response){   
